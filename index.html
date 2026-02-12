@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BJJ Position Flowchart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-main">
+        <h1>BJJ Flow Chart Builder</h1>
+        <p>Build separate charts by position and focus area.</p>
+      </div>
+      <div class="chart-nav">
+        <label>
+          Position
+          <select id="position-select">
+            <option value="Mount">Mount</option>
+            <option value="Side Control">Side Control</option>
+            <option value="Closed Guard">Closed Guard</option>
+            <option value="Half Guard">Half Guard</option>
+            <option value="Open Guard">Open Guard</option>
+            <option value="Back Control">Back Control</option>
+            <option value="Standing">Standing</option>
+          </select>
+        </label>
+        <label>
+          Flow
+          <select id="chart-type-select">
+            <option value="Attacks">Attacks</option>
+            <option value="Escapes">Escapes</option>
+          </select>
+        </label>
+        <button id="load-template" class="nav-btn">Load Template</button>
+        <button id="theme-toggle" class="nav-btn">Switch to Dark Mode</button>
+        <button id="mode-toggle" class="nav-btn">Switch to User Mode</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="panel controls">
+        <h2>Build</h2>
+        <button id="add-node">Add Node</button>
+        <button id="connect-nodes">Connect Selected</button>
+        <button id="delete-connection" class="danger">Delete Selected Connection</button>
+        <button id="toggle-connection-curve">Toggle Connection Curve</button>
+        <button id="delete-selection" class="danger">Delete Selected</button>
+        <button id="auto-layout">Auto Layout</button>
+
+        <h2>Board</h2>
+        <button id="clear-board" class="danger">Clear Board</button>
+
+        <h2>Data</h2>
+        <button id="save-local">Save to Browser</button>
+        <button id="load-local">Load from Browser</button>
+        <button id="export-json">Export JSON</button>
+        <label class="import-wrap">
+          Import JSON
+          <input id="import-json" type="file" accept="application/json" />
+        </label>
+
+        <h2>Drill</h2>
+        <button id="random-path">Random Attack Path</button>
+        <div id="path-output" class="path-output">No path generated yet.</div>
+
+        <h2>Transcript Build</h2>
+        <button id="build-from-transcripts">Build Current Flow From Reference Transcripts</button>
+        <div id="transcript-status" class="path-output">No transcript build run yet.</div>
+      </aside>
+
+      <section class="board-wrap">
+        <div class="board-toolbar">
+          <span id="active-chart">Mount - Attacks</span>
+          <span id="mode-indicator">Mode: Builder</span>
+          <span id="selection-status">Selection: none</span>
+          <span class="zoom-controls">
+            <button id="zoom-out" type="button">-</button>
+            <button id="zoom-reset" type="button">Reset</button>
+            <button id="zoom-in" type="button">+</button>
+            <span id="zoom-level">100%</span>
+          </span>
+          <span class="hint">Click to select. Shift+Click for multi-select. Drag to reposition.</span>
+        </div>
+        <div id="board" class="board" aria-label="flowchart board">
+          <div id="zoom-layer" class="zoom-layer">
+            <svg id="edges" class="edges"></svg>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel user-references">
+        <h2>References</h2>
+        <ul id="user-references-list" class="references-list references-readonly"></ul>
+      </aside>
+
+      <aside class="panel inspector">
+        <h2>Inspector</h2>
+        <div id="inspector-empty">Select one node to edit details.</div>
+
+        <form id="inspector-form" class="hidden">
+          <label>
+            Label
+            <input id="node-label" type="text" maxlength="60" />
+          </label>
+
+          <label>
+            Type
+            <select id="node-type">
+              <option value="position">Position</option>
+              <option value="attack">Attack</option>
+              <option value="reaction">Reaction</option>
+              <option value="finish">Finish</option>
+            </select>
+          </label>
+
+          <label>
+            Coaching Note
+            <textarea id="node-notes" rows="6" maxlength="400"></textarea>
+          </label>
+        </form>
+
+        <h2>Legend</h2>
+        <ul class="legend">
+          <li><span class="shape my-action"></span>Your actions / start</li>
+          <li><span class="shape opponent"></span>Opponent responses</li>
+        </ul>
+
+        <h2>References</h2>
+        <form id="reference-form" class="reference-form">
+          <label>
+            Video Title
+            <input id="reference-title" type="text" maxlength="80" placeholder="e.g. Mount Armbar Details" />
+          </label>
+          <label>
+            Video URL
+            <input id="reference-url" type="url" maxlength="500" placeholder="https://..." required />
+          </label>
+          <button id="add-reference" type="submit">Add Reference</button>
+        </form>
+        <ul id="references-list" class="references-list"></ul>
+      </aside>
+    </main>
+
+    <template id="node-template">
+      <article class="node" tabindex="0">
+        <header class="node-title"></header>
+      </article>
+    </template>
+
+    <div id="node-tooltip" class="node-tooltip" hidden></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

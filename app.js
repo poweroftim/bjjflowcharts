@@ -41,6 +41,7 @@ const POSITIONS = [
 
 const FLOW_TYPES = ["Attacks", "Escapes"];
 const STORAGE_KEY = "bjj-flowchart-workspace-v1";
+const BUNDLED_WORKSPACE_URL = "data/workspace.json";
 const NODE_WIDTH = 210;
 const NODE_HEIGHT = 88;
 const BASE_CANVAS_HEIGHT = 1400;
@@ -1104,6 +1105,39 @@ function saveLocal() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(workspace));
 }
 
+function applyWorkspacePayload(parsed) {
+  if (!parsed || typeof parsed !== "object") {
+    return false;
+  }
+
+  state.charts = parsed.charts && typeof parsed.charts === "object" ? parsed.charts : {};
+
+  if (POSITIONS.includes(parsed.currentPosition)) {
+    state.currentPosition = parsed.currentPosition;
+  }
+
+  if (FLOW_TYPES.includes(parsed.currentChartType)) {
+    state.currentChartType = parsed.currentChartType;
+  }
+
+  if (parsed.mode === "user" || parsed.mode === "builder") {
+    setMode(parsed.mode);
+  } else {
+    setMode("builder");
+  }
+
+  if (parsed.theme === "dark" || parsed.theme === "light") {
+    setTheme(parsed.theme);
+  } else {
+    setTheme("light");
+  }
+
+  positionSelect.value = state.currentPosition;
+  chartTypeSelect.value = state.currentChartType;
+  loadCurrentChart();
+  return true;
+}
+
 function loadLocal() {
   const raw = localStorage.getItem(STORAGE_KEY);
   if (!raw) {
@@ -1112,38 +1146,22 @@ function loadLocal() {
 
   try {
     const parsed = JSON.parse(raw);
-    if (!parsed || typeof parsed !== "object") {
-      throw new Error("Invalid workspace payload");
-    }
-
-    state.charts = parsed.charts && typeof parsed.charts === "object" ? parsed.charts : {};
-
-    if (POSITIONS.includes(parsed.currentPosition)) {
-      state.currentPosition = parsed.currentPosition;
-    }
-
-    if (FLOW_TYPES.includes(parsed.currentChartType)) {
-      state.currentChartType = parsed.currentChartType;
-    }
-
-    if (parsed.mode === "user" || parsed.mode === "builder") {
-      setMode(parsed.mode);
-    } else {
-      setMode("builder");
-    }
-
-    if (parsed.theme === "dark" || parsed.theme === "light") {
-      setTheme(parsed.theme);
-    } else {
-      setTheme("light");
-    }
-
-    positionSelect.value = state.currentPosition;
-    chartTypeSelect.value = state.currentChartType;
-    loadCurrentChart();
-    return true;
+    return applyWorkspacePayload(parsed);
   } catch {
     alert("Stored workspace could not be loaded.");
+    return false;
+  }
+}
+
+async function loadBundledWorkspace() {
+  try {
+    const response = await fetch(BUNDLED_WORKSPACE_URL, { cache: "no-store" });
+    if (!response.ok) {
+      return false;
+    }
+    const parsed = await response.json();
+    return applyWorkspacePayload(parsed);
+  } catch {
     return false;
   }
 }
@@ -1171,14 +1189,7 @@ function importJson(file) {
       }
 
       if (data && data.charts && typeof data.charts === "object") {
-        state.charts = data.charts;
-        if (data.mode === "user" || data.mode === "builder") {
-          setMode(data.mode);
-        }
-        if (data.theme === "dark" || data.theme === "light") {
-          setTheme(data.theme);
-        }
-        loadCurrentChart();
+        applyWorkspacePayload(data);
         return;
       }
 
@@ -1936,7 +1947,15 @@ setMode("builder");
 setTheme("light");
 ensureCanvasSize();
 applyZoom();
-if (!loadLocal()) {
-  loadTemplateForCurrentSelection();
+async function initializeApp() {
+  const loadedLocal = loadLocal();
+  if (!loadedLocal) {
+    const loadedBundled = await loadBundledWorkspace();
+    if (!loadedBundled) {
+      loadTemplateForCurrentSelection();
+    }
+  }
+  render();
 }
-render();
+
+initializeApp();

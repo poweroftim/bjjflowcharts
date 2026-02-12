@@ -10,60 +10,190 @@
           "id": "n1",
           "label": "Low Mount Control",
           "type": "position",
-          "notes": "Start heavy with chest pressure and knees pinched.",
-          "x": 40,
-          "y": 190
+          "notes": "Start heavy with feet together, legs curled, back arched, no weight on the mat. Secure the head with one arm and post with the other. ",
+          "x": 27.28125,
+          "y": 120.6015625
         },
         {
           "id": "n2",
-          "label": "Cross Collar Feed",
+          "label": "Attack the Neck",
           "type": "attack",
-          "notes": "Slide deep first grip and hide elbow.",
-          "x": 340,
-          "y": 80
+          "notes": "",
+          "x": 372.22265625,
+          "y": 120.80859375
         },
         {
           "id": "n3",
-          "label": "High Mount Climb",
+          "label": "High Mount",
           "type": "attack",
-          "notes": "Walk knees high when they defend neck.",
-          "x": 340,
-          "y": 190
+          "notes": "Knees should be under their armpits. ",
+          "x": 1527.4052734375,
+          "y": 136.0771484375
         },
         {
           "id": "n4",
-          "label": "Opponent Frames",
+          "label": "Knee-elbow escape",
           "type": "reaction",
-          "notes": "Elbows come inside to create distance.",
-          "x": 340,
-          "y": 300
+          "notes": "",
+          "x": 366.80859375,
+          "y": 502.59375
         },
         {
           "id": "n5",
           "label": "Armbar",
           "type": "finish",
-          "notes": "Trap near arm and turn angle.",
-          "x": 650,
-          "y": 140
+          "notes": "",
+          "x": 1898.0962456597222,
+          "y": 282.92371961805554
         },
         {
-          "id": "n6",
-          "label": "Mounted Triangle",
-          "type": "finish",
-          "notes": "Switch if armbar defense stacks.",
-          "x": 650,
-          "y": 250
+          "id": "node-3p0i7dn",
+          "label": "Trap and roll escape",
+          "type": "reaction",
+          "notes": "",
+          "x": 363.38671875,
+          "y": 694.390625
+        },
+        {
+          "id": "node-7jvga6w",
+          "label": "Raises Arms, Exposing Elbows",
+          "type": "reaction",
+          "notes": "",
+          "x": 1004.7412109375,
+          "y": 135.3466796875
+        },
+        {
+          "id": "node-insm1zc",
+          "label": "Ezekiel Choke",
+          "type": "attack",
+          "notes": "",
+          "x": 676.8349609375,
+          "y": 260.9794921875
+        },
+        {
+          "id": "node-r86uicg",
+          "label": "Cross Collar Forearm Choke",
+          "type": "attack",
+          "notes": "With a cross-collar grip, put your forearm in their throat until they tap or move their arms up to defend.",
+          "x": 682.1142578125,
+          "y": 46.8701171875
+        },
+        {
+          "id": "node-aabkuk4",
+          "label": "Cross Collar Choke",
+          "type": "attack",
+          "notes": "",
+          "x": 1901.75,
+          "y": 38.0234375
+        },
+        {
+          "id": "node-k57j2fp",
+          "label": "Slide into High Mount",
+          "type": "attack",
+          "notes": "Walk knees all the way under their armpits when they defend the neck.",
+          "x": 1262.8515625,
+          "y": 135.8046875
         }
       ],
       "edges": [
-        { "id": "e1", "from": "n1", "to": "n2", "curved": false, "fromAnchor": 2, "toAnchor": 6 },
-        { "id": "e2", "from": "n1", "to": "n3", "curved": false, "fromAnchor": 2, "toAnchor": 6 },
-        { "id": "e3", "from": "n1", "to": "n4", "curved": false, "fromAnchor": 2, "toAnchor": 6 },
-        { "id": "e4", "from": "n2", "to": "n5", "curved": false, "fromAnchor": 2, "toAnchor": 6 },
-        { "id": "e5", "from": "n3", "to": "n5", "curved": false, "fromAnchor": 2, "toAnchor": 6 },
-        { "id": "e6", "from": "n4", "to": "n6", "curved": false, "fromAnchor": 2, "toAnchor": 6 }
+        {
+          "id": "e1",
+          "from": "n1",
+          "to": "n2"
+        },
+        {
+          "id": "e3",
+          "from": "n1",
+          "to": "n4",
+          "curved": false
+        },
+        {
+          "id": "e5",
+          "from": "n3",
+          "to": "n5"
+        },
+        {
+          "id": "edge-e82ai04",
+          "from": "n1",
+          "to": "node-3p0i7dn"
+        },
+        {
+          "id": "edge-in8f9s1",
+          "from": "n4",
+          "to": "n1",
+          "curved": true,
+          "fromAnchor": 6,
+          "toAnchor": 2
+        },
+        {
+          "id": "edge-a59q3j0",
+          "from": "n2",
+          "to": "node-r86uicg",
+          "curved": false,
+          "fromAnchor": 2,
+          "toAnchor": 6
+        },
+        {
+          "id": "edge-p74p7fa",
+          "from": "node-r86uicg",
+          "to": "node-7jvga6w",
+          "curved": false,
+          "fromAnchor": 2,
+          "toAnchor": 6
+        },
+        {
+          "id": "edge-stfbusj",
+          "from": "n2",
+          "to": "node-insm1zc",
+          "curved": false,
+          "fromAnchor": 2,
+          "toAnchor": 6
+        },
+        {
+          "id": "edge-9mzyo9z",
+          "from": "node-insm1zc",
+          "to": "node-7jvga6w",
+          "curved": false,
+          "fromAnchor": 2,
+          "toAnchor": 6
+        },
+        {
+          "id": "edge-a4bm8f8",
+          "from": "n3",
+          "to": "node-aabkuk4",
+          "curved": false,
+          "fromAnchor": 2,
+          "toAnchor": 6
+        },
+        {
+          "id": "edge-xy928py",
+          "from": "node-7jvga6w",
+          "to": "node-k57j2fp",
+          "curved": false,
+          "fromAnchor": 2,
+          "toAnchor": 6
+        },
+        {
+          "id": "edge-n3alof8",
+          "from": "node-k57j2fp",
+          "to": "n3",
+          "curved": false,
+          "fromAnchor": 2,
+          "toAnchor": 6
+        }
       ],
-      "references": []
+      "references": [
+        {
+          "id": "ref-i57vl56",
+          "title": "Concepts for Maintaining Mount",
+          "url": "https://www.youtube.com/watch?v=Wy6Si0FuQaU"
+        },
+        {
+          "id": "ref-1kqysxl",
+          "title": "Roger Gracie Mount: The Missing Details",
+          "url": "https://www.youtube.com/watch?v=uSe_ehihLxI"
+        }
+      ]
     },
     "Mount::Escapes": {
       "nodes": [
@@ -117,12 +247,54 @@
         }
       ],
       "edges": [
-        { "id": "me1", "from": "m1", "to": "m2", "curved": false, "fromAnchor": 2, "toAnchor": 6 },
-        { "id": "me2", "from": "m1", "to": "m3", "curved": false, "fromAnchor": 2, "toAnchor": 6 },
-        { "id": "me3", "from": "m2", "to": "m4", "curved": false, "fromAnchor": 2, "toAnchor": 6 },
-        { "id": "me4", "from": "m3", "to": "m5", "curved": false, "fromAnchor": 2, "toAnchor": 6 },
-        { "id": "me5", "from": "m4", "to": "m6", "curved": false, "fromAnchor": 2, "toAnchor": 6 },
-        { "id": "me6", "from": "m5", "to": "m6", "curved": false, "fromAnchor": 2, "toAnchor": 6 }
+        {
+          "id": "me1",
+          "from": "m1",
+          "to": "m2",
+          "curved": false,
+          "fromAnchor": 2,
+          "toAnchor": 6
+        },
+        {
+          "id": "me2",
+          "from": "m1",
+          "to": "m3",
+          "curved": false,
+          "fromAnchor": 2,
+          "toAnchor": 6
+        },
+        {
+          "id": "me3",
+          "from": "m2",
+          "to": "m4",
+          "curved": false,
+          "fromAnchor": 2,
+          "toAnchor": 6
+        },
+        {
+          "id": "me4",
+          "from": "m3",
+          "to": "m5",
+          "curved": false,
+          "fromAnchor": 2,
+          "toAnchor": 6
+        },
+        {
+          "id": "me5",
+          "from": "m4",
+          "to": "m6",
+          "curved": false,
+          "fromAnchor": 2,
+          "toAnchor": 6
+        },
+        {
+          "id": "me6",
+          "from": "m5",
+          "to": "m6",
+          "curved": false,
+          "fromAnchor": 2,
+          "toAnchor": 6
+        }
       ],
       "references": []
     }

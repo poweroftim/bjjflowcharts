@@ -45,3 +45,5 @@ No install or build step is required.
 - In the app, check the Transcript Build status box:
   - `Startup source: bundled workspace file.` means bundled data loaded
   - If not, click `Load Bundled Data` in the Data section
+- On GitHub Pages, open this directly to confirm deploy includes data:
+  - `https://poweroftim.github.io/bjjflowcharts/data/workspace.json`

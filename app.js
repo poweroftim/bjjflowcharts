@@ -42,7 +42,9 @@ const POSITIONS = [
 
 const FLOW_TYPES = ["Attacks", "Escapes"];
 const STORAGE_KEY = "bjj-flowchart-workspace-v1";
-const BUNDLED_WORKSPACE_URL = "data/workspace.json";
+const APP_SCRIPT_URL =
+  [...document.scripts].map((script) => script.src).find((src) => /\/app\.js(\?|$)/.test(src)) || window.location.href;
+const BUNDLED_WORKSPACE_URL = new URL("data/workspace.json", new URL(".", APP_SCRIPT_URL)).toString();
 const NODE_WIDTH = 210;
 const NODE_HEIGHT = 88;
 const BASE_CANVAS_HEIGHT = 1400;
@@ -1158,11 +1160,13 @@ async function loadBundledWorkspace() {
   try {
     const response = await fetch(BUNDLED_WORKSPACE_URL, { cache: "no-store" });
     if (!response.ok) {
+      console.warn("Bundled workspace fetch failed", response.status, BUNDLED_WORKSPACE_URL);
       return false;
     }
     const parsed = await response.json();
     return applyWorkspacePayload(parsed);
-  } catch {
+  } catch (error) {
+    console.warn("Bundled workspace fetch error", BUNDLED_WORKSPACE_URL, error);
     return false;
   }
 }
@@ -1888,7 +1892,7 @@ document.getElementById("export-workspace").addEventListener("click", exportWork
 loadBundledButton.addEventListener("click", async () => {
   const loaded = await loadBundledWorkspace();
   if (!loaded) {
-    alert("Bundled workspace could not be loaded. Confirm data/workspace.json is deployed.");
+    alert(`Bundled workspace could not be loaded from ${BUNDLED_WORKSPACE_URL}`);
     return;
   }
   transcriptStatus.textContent = "Loaded bundled workspace data.";

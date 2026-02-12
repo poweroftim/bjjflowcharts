@@ -75,7 +75,7 @@ const state = {
   currentPosition: "Mount",
   currentChartType: "Attacks",
   mode: "builder",
-  theme: "light",
+  theme: "dark",
   titleFetchInFlight: new Set(),
   zoom: 1,
   canvasWidth: 0,
@@ -1132,7 +1132,7 @@ function applyWorkspacePayload(parsed) {
   if (parsed.theme === "dark" || parsed.theme === "light") {
     setTheme(parsed.theme);
   } else {
-    setTheme("light");
+    setTheme("dark");
   }
 
   positionSelect.value = state.currentPosition;
@@ -1980,7 +1980,7 @@ positionSelect.value = state.currentPosition;
 chartTypeSelect.value = state.currentChartType;
 setActiveChartLabel();
 setMode("builder");
-setTheme("light");
+setTheme("dark");
 ensureCanvasSize();
 applyZoom();
 async function initializeApp() {

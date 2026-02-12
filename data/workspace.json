@@ -2,7 +2,7 @@
   "currentPosition": "Mount",
   "currentChartType": "Attacks",
   "mode": "builder",
-  "theme": "light",
+  "theme": "dark",
   "charts": {
     "Mount::Attacks": {
       "nodes": [

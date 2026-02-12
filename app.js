@@ -1154,6 +1154,14 @@ function loadLocal() {
 }
 
 async function loadBundledWorkspace() {
+  const bundledFromWindow =
+    typeof window !== "undefined" && window.BUNDLED_WORKSPACE && typeof window.BUNDLED_WORKSPACE === "object"
+      ? JSON.parse(JSON.stringify(window.BUNDLED_WORKSPACE))
+      : null;
+  if (bundledFromWindow) {
+    return applyWorkspacePayload(bundledFromWindow);
+  }
+
   try {
     const response = await fetch(BUNDLED_WORKSPACE_URL, { cache: "no-store" });
     if (!response.ok) {
@@ -1948,10 +1956,10 @@ setTheme("light");
 ensureCanvasSize();
 applyZoom();
 async function initializeApp() {
-  const loadedLocal = loadLocal();
-  if (!loadedLocal) {
-    const loadedBundled = await loadBundledWorkspace();
-    if (!loadedBundled) {
+  const loadedBundled = await loadBundledWorkspace();
+  if (!loadedBundled) {
+    const loadedLocal = loadLocal();
+    if (!loadedLocal) {
       loadTemplateForCurrentSelection();
     }
   }

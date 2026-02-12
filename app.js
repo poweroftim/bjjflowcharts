@@ -22,6 +22,7 @@ const referencesList = document.getElementById("references-list");
 const userReferencesList = document.getElementById("user-references-list");
 const themeToggleButton = document.getElementById("theme-toggle");
 const modeToggleButton = document.getElementById("mode-toggle");
+const loadBundledButton = document.getElementById("load-bundled");
 const modeIndicator = document.getElementById("mode-indicator");
 const buildFromTranscriptsButton = document.getElementById("build-from-transcripts");
 const zoomOutButton = document.getElementById("zoom-out");
@@ -1154,14 +1155,6 @@ function loadLocal() {
 }
 
 async function loadBundledWorkspace() {
-  const bundledFromWindow =
-    typeof window !== "undefined" && window.BUNDLED_WORKSPACE && typeof window.BUNDLED_WORKSPACE === "object"
-      ? JSON.parse(JSON.stringify(window.BUNDLED_WORKSPACE))
-      : null;
-  if (bundledFromWindow) {
-    return applyWorkspacePayload(bundledFromWindow);
-  }
-
   try {
     const response = await fetch(BUNDLED_WORKSPACE_URL, { cache: "no-store" });
     if (!response.ok) {
@@ -1182,6 +1175,28 @@ function exportJson() {
   a.download = `${state.currentPosition.toLowerCase().replace(/\s+/g, "-")}-${state.currentChartType
     .toLowerCase()
     .replace(/\s+/g, "-")}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function exportWorkspaceJson() {
+  persistCurrentChart();
+  const payload = JSON.stringify(
+    {
+      currentPosition: state.currentPosition,
+      currentChartType: state.currentChartType,
+      mode: state.mode,
+      theme: state.theme,
+      charts: state.charts,
+    },
+    null,
+    2,
+  );
+  const blob = new Blob([payload], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "bjj-flowchart-workspace.json";
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -1869,6 +1884,15 @@ document.getElementById("clear-board").addEventListener("click", () => {
 
 document.getElementById("save-local").addEventListener("click", saveLocal);
 document.getElementById("load-local").addEventListener("click", loadLocal);
+document.getElementById("export-workspace").addEventListener("click", exportWorkspaceJson);
+loadBundledButton.addEventListener("click", async () => {
+  const loaded = await loadBundledWorkspace();
+  if (!loaded) {
+    alert("Bundled workspace could not be loaded. Confirm data/workspace.json is deployed.");
+    return;
+  }
+  transcriptStatus.textContent = "Loaded bundled workspace data.";
+});
 document.getElementById("export-json").addEventListener("click", exportJson);
 document.getElementById("import-json").addEventListener("change", (event) => {
   const file = event.target.files?.[0];
@@ -1961,7 +1985,12 @@ async function initializeApp() {
     const loadedLocal = loadLocal();
     if (!loadedLocal) {
       loadTemplateForCurrentSelection();
+      transcriptStatus.textContent = "Startup source: built-in template fallback.";
+    } else {
+      transcriptStatus.textContent = "Startup source: browser storage.";
     }
+  } else {
+    transcriptStatus.textContent = "Startup source: bundled workspace file.";
   }
   render();
 }

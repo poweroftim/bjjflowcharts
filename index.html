@@ -58,9 +58,11 @@
         <button id="clear-board" class="danger">Clear Board</button>
 
         <h2>Data</h2>
+        <button id="load-bundled">Load Bundled Data</button>
         <button id="save-local">Save to Browser</button>
         <button id="load-local">Load from Browser</button>
-        <button id="export-json">Export JSON</button>
+        <button id="export-workspace">Export Workspace JSON</button>
+        <button id="export-json">Export Current Chart JSON</button>
         <label class="import-wrap">
           Import JSON
           <input id="import-json" type="file" accept="application/json" />
@@ -156,7 +158,6 @@
 
     <div id="node-tooltip" class="node-tooltip" hidden></div>
 
-    <script src="data/workspace.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
